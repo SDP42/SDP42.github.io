@@ -1,0 +1,791 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Swayam Panchal · Data Scientist & Data Analyst</title>
+<meta name="description" content="Swayam Panchal — data scientist and data analyst from Mumbai. Analysis, machine learning and dashboards that turn raw data into decisions." />
+<meta name="theme-color" content="#4F46E5" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%234F46E5'/%3E%3Ccircle cx='22' cy='40' r='6' fill='%23fff'/%3E%3Ccircle cx='34' cy='26' r='6' fill='%235EEAD4'/%3E%3Ccircle cx='46' cy='36' r='6' fill='%23FCD34D'/%3E%3C/svg%3E" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --bg: #ffffff;
+    --bg-soft: #f8fafc;
+    --ink: #0f172a;
+    --muted: #475569;
+    --faint: #94a3b8;
+    --line: #e2e8f0;
+    --indigo: #4f46e5;
+    --indigo-soft: #eef2ff;
+    --teal: #0d9488;
+    --teal-soft: #ccfbf1;
+    --amber: #f59e0b;
+    --amber-soft: #fef3c7;
+    --rose: #e11d48;
+    --radius: 20px;
+    --shadow: 0 1px 2px rgba(15, 23, 42, .04), 0 12px 32px -12px rgba(15, 23, 42, .12);
+    --ease: cubic-bezier(.22, .8, .2, 1);
+    --display: "Plus Jakarta Sans", "Segoe UI", system-ui, sans-serif;
+    --body: "Inter", "Segoe UI", system-ui, sans-serif;
+    --mono: "JetBrains Mono", "SF Mono", Menlo, Consolas, monospace;
+    color-scheme: light;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; scroll-padding-top: 84px; }
+  body { margin: 0; background: var(--bg); color: var(--ink); font: 400 17px/1.65 var(--body); -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+  a { color: inherit; text-decoration: none; }
+  img, svg, canvas { display: block; }
+  ::selection { background: var(--indigo); color: #fff; }
+  .wrap { width: min(1160px, 100% - 32px); margin: 0 auto; }
+  .mono { font-family: var(--mono); }
+
+  /* scroll progress + nav */
+  .progress { position: fixed; inset: 0 0 auto 0; height: 3px; z-index: 60; background: linear-gradient(90deg, var(--indigo), var(--teal), var(--amber)); transform-origin: 0 50%; transform: scaleX(0); }
+  .nav { position: fixed; inset: 0 0 auto 0; z-index: 50; transition: transform .45s var(--ease), background .3s, box-shadow .3s; }
+  .nav.scrolled { background: rgba(255, 255, 255, .78); backdrop-filter: saturate(1.6) blur(14px); -webkit-backdrop-filter: saturate(1.6) blur(14px); box-shadow: 0 1px 0 var(--line); }
+  .nav.hidden { transform: translateY(-100%); }
+  .nav .wrap { display: flex; align-items: center; justify-content: space-between; height: 68px; }
+  .brand { display: flex; align-items: center; gap: 10px; font: 800 18px var(--display); letter-spacing: -.3px; }
+  .brand i { width: 30px; height: 30px; border-radius: 9px; background: var(--indigo); display: grid; place-items: center; color: #fff; font: 700 13px var(--mono); font-style: normal; }
+  .links { display: flex; gap: 4px; }
+  .links a { padding: 8px 14px; border-radius: 999px; font: 500 15px var(--body); color: var(--muted); transition: color .2s, background .2s; }
+  .links a:hover { color: var(--ink); }
+  .links a.active { color: var(--indigo); background: var(--indigo-soft); }
+  .nav-cta { padding: 9px 18px; border-radius: 999px; background: var(--ink); color: #fff; font: 600 14px var(--body); transition: transform .2s var(--ease), background .2s; }
+  .nav-cta:hover { background: var(--indigo); transform: translateY(-1px); }
+  @media (max-width: 900px) { .links { display: none; } }
+
+  /* buttons */
+  .btn { display: inline-flex; align-items: center; gap: 10px; padding: 14px 22px; border-radius: 14px; font: 600 15.5px var(--body); border: 1px solid transparent; transition: transform .25s var(--ease), box-shadow .25s var(--ease), background .2s, border-color .2s; will-change: transform; }
+  .btn svg { width: 18px; height: 18px; }
+  .btn-primary { background: var(--indigo); color: #fff; box-shadow: 0 10px 24px -10px rgba(79, 70, 229, .7); }
+  .btn-primary:hover { box-shadow: 0 16px 32px -12px rgba(79, 70, 229, .8); }
+  .btn-ghost { background: #fff; border-color: var(--line); color: var(--ink); }
+  .btn-ghost:hover { border-color: #c7d2fe; }
+
+  /* hero */
+  .hero { position: relative; min-height: 100vh; display: grid; align-items: center; padding: 110px 0 60px; overflow: hidden; }
+  .hero::before { content: ""; position: absolute; inset: 0; background-image: radial-gradient(#cbd5e1 1.1px, transparent 1.1px); background-size: 24px 24px; mask-image: radial-gradient(ellipse 70% 60% at 65% 45%, #000 20%, transparent 75%); -webkit-mask-image: radial-gradient(ellipse 70% 60% at 65% 45%, #000 20%, transparent 75%); opacity: .7; }
+  /* soft colour pools: plain radial gradients that only move, so no per-frame blur */
+  .blob { position: absolute; border-radius: 50%; pointer-events: none; will-change: transform; }
+  .blob.a { width: 640px; height: 640px; background: radial-gradient(closest-side, rgba(199, 210, 254, .75), rgba(224, 231, 255, 0)); right: 2%; top: 0; animation: drift 18s ease-in-out infinite alternate; }
+  .blob.b { width: 560px; height: 560px; background: radial-gradient(closest-side, rgba(153, 246, 228, .55), rgba(204, 251, 241, 0)); right: 20%; bottom: -6%; animation: drift 22s ease-in-out -8s infinite alternate; }
+  @keyframes drift { to { transform: translate(-60px, 40px) scale(1.1); } }
+  .hero-grid { position: relative; display: grid; grid-template-columns: 1.02fr 1fr; gap: 28px; align-items: center; }
+  .pill { display: inline-flex; align-items: center; gap: 10px; padding: 7px 14px 7px 10px; border-radius: 999px; background: var(--indigo-soft); color: var(--indigo); font: 600 12.5px var(--mono); letter-spacing: 2px; text-transform: uppercase; }
+  .pill b { width: 8px; height: 8px; border-radius: 50%; background: #22c55e; box-shadow: 0 0 0 0 rgba(34, 197, 94, .5); animation: ping 2s infinite; }
+  @keyframes ping { 70% { box-shadow: 0 0 0 9px rgba(34, 197, 94, 0); } 100% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0); } }
+  h1 { font: 800 clamp(48px, 7.4vw, 92px)/1 var(--display); letter-spacing: -.045em; margin: 22px 0 22px; }
+  .grad { background: linear-gradient(100deg, var(--indigo) 10%, var(--teal) 90%); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .lead { font-size: clamp(18px, 1.6vw, 21px); color: var(--muted); max-width: 34ch; margin: 0 0 18px; }
+  .typer { font: 600 16px var(--mono); color: var(--faint); margin: 0 0 30px; min-height: 26px; }
+  .typer span { color: var(--teal); }
+  .typer i { display: inline-block; width: 9px; height: 18px; background: var(--indigo); vertical-align: -3px; margin-left: 2px; animation: blink 1s steps(1) infinite; }
+  @keyframes blink { 50% { opacity: 0; } }
+  .cta { display: flex; flex-wrap: wrap; gap: 12px; }
+  .meta { display: flex; flex-wrap: wrap; gap: 8px 22px; margin-top: 34px; color: var(--muted); font-size: 15px; }
+  .meta span { display: inline-flex; align-items: center; gap: 8px; }
+  .meta svg { width: 17px; height: 17px; color: var(--indigo); }
+  .stage { position: relative; aspect-ratio: 1 / .92; }
+  #scatter { width: 100%; height: 100%; cursor: grab; touch-action: pan-y; }
+  #scatter:active { cursor: grabbing; }
+  .stage-ui { position: absolute; left: 50%; bottom: 0; transform: translateX(-50%); display: flex; gap: 10px; align-items: center; padding: 7px 8px 7px 14px; border-radius: 999px; background: rgba(255, 255, 255, .85); border: 1px solid var(--line); backdrop-filter: blur(8px); box-shadow: var(--shadow); white-space: nowrap; }
+  .stage-ui small { font: 500 12.5px var(--mono); color: var(--muted); }
+  .stage-ui button { border: 0; border-radius: 999px; padding: 7px 12px; background: var(--ink); color: #fff; font: 600 12.5px var(--body); cursor: pointer; transition: background .2s; }
+  .stage-ui button:hover { background: var(--indigo); }
+  .legend { position: absolute; top: 6px; right: 6px; display: grid; gap: 6px; font: 500 12.5px var(--mono); color: var(--muted); }
+  .legend span { display: flex; align-items: center; gap: 8px; }
+  .legend b { width: 10px; height: 10px; border-radius: 50%; }
+  .scroll-cue { position: absolute; left: 50%; bottom: 22px; transform: translateX(-50%); display: grid; justify-items: center; gap: 8px; font: 500 12px var(--mono); color: var(--faint); letter-spacing: 2px; }
+  .scroll-cue i { width: 22px; height: 34px; border: 2px solid #cbd5e1; border-radius: 12px; position: relative; }
+  .scroll-cue i::after { content: ""; position: absolute; left: 50%; top: 6px; width: 4px; height: 7px; margin-left: -2px; border-radius: 2px; background: var(--indigo); animation: wheel 1.8s var(--ease) infinite; }
+  @keyframes wheel { 0% { opacity: 0; transform: translateY(0); } 30% { opacity: 1; } 100% { opacity: 0; transform: translateY(12px); } }
+  @media (max-width: 900px) {
+    .hero { min-height: auto; padding-top: 100px; }
+    .hero-grid { grid-template-columns: 1fr; }
+    .stage { max-width: 520px; width: 100%; margin: 10px auto 0; }
+    .scroll-cue { display: none; }
+  }
+
+  /* sections */
+  section { position: relative; padding: 110px 0; }
+  .soft { background: var(--bg-soft); }
+  .eyebrow { font: 600 13px var(--mono); letter-spacing: 3px; text-transform: uppercase; color: var(--indigo); margin: 0 0 14px; display: flex; align-items: center; gap: 12px; }
+  .eyebrow::before { content: ""; width: 28px; height: 2px; background: currentColor; border-radius: 2px; }
+  h2 { font: 800 clamp(34px, 4.6vw, 54px)/1.06 var(--display); letter-spacing: -.035em; margin: 0 0 18px; max-width: 18ch; }
+  .sub { color: var(--muted); max-width: 60ch; margin: 0; font-size: 18px; }
+  .head { margin-bottom: 54px; }
+
+  /* reveal on scroll */
+  .reveal { opacity: 0; transform: translateY(34px); filter: blur(6px); transition: opacity .9s var(--ease), transform .9s var(--ease), filter .9s var(--ease); transition-delay: calc(var(--i, 0) * 90ms); }
+  .reveal.in { opacity: 1; transform: none; filter: none; }
+  .reveal-x { opacity: 0; transform: translateX(-40px); transition: opacity .9s var(--ease), transform .9s var(--ease); transition-delay: calc(var(--i, 0) * 90ms); }
+  .reveal-x.in { opacity: 1; transform: none; }
+  .no-js .reveal, .no-js .reveal-x { opacity: 1; transform: none; filter: none; }
+
+  /* stats */
+  .stats { padding: 0; margin-top: -10px; }
+  .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); border: 1px solid var(--line); border-radius: var(--radius); background: #fff; box-shadow: var(--shadow); overflow: hidden; }
+  .stat { padding: 30px 28px; border-left: 1px solid var(--line); }
+  .stat:first-child { border-left: 0; }
+  .stat strong { display: block; font: 800 44px/1 var(--display); letter-spacing: -.04em; }
+  .stat strong em { font-style: normal; color: var(--indigo); }
+  .stat > span { display: block; margin-top: 10px; color: var(--muted); font-size: 15px; }
+  @media (max-width: 800px) { .stats-grid { grid-template-columns: repeat(2, 1fr); } .stat:nth-child(3) { border-left: 0; } .stat:nth-child(n+3) { border-top: 1px solid var(--line); } }
+
+  /* about */
+  .about-grid { display: grid; grid-template-columns: 1.15fr 1fr; gap: 56px; align-items: start; }
+  .about-grid p { color: var(--muted); margin: 0 0 18px; font-size: 18px; }
+  .about-grid p strong { color: var(--ink); font-weight: 600; }
+  .facts { display: grid; gap: 14px; }
+  .fact { display: grid; grid-template-columns: 44px 1fr; gap: 16px; align-items: start; padding: 18px; border: 1px solid var(--line); border-radius: 16px; background: #fff; transition: transform .35s var(--ease), box-shadow .35s var(--ease), border-color .35s; }
+  .fact:hover { transform: translateX(6px); box-shadow: var(--shadow); border-color: #c7d2fe; }
+  .fact .ic { width: 44px; height: 44px; border-radius: 12px; display: grid; place-items: center; }
+  .fact .ic svg { width: 22px; height: 22px; }
+  .fact h4 { margin: 0 0 2px; font: 700 16px var(--display); }
+  .fact p { margin: 0; font-size: 15px; }
+  @media (max-width: 900px) { .about-grid { grid-template-columns: 1fr; } }
+
+  /* what I do */
+  .cards3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
+  .card { position: relative; background: #fff; border: 1px solid var(--line); border-radius: var(--radius); padding: 22px; box-shadow: var(--shadow); overflow: hidden; transition: transform .45s var(--ease), box-shadow .45s var(--ease); }
+  .card::after { content: ""; position: absolute; inset: 0; pointer-events: none; background: radial-gradient(420px circle at var(--mx, 50%) var(--my, 0%), rgba(79, 70, 229, .08), transparent 45%); opacity: 0; transition: opacity .3s; }
+  .card:hover::after { opacity: 1; }
+  .card:hover { box-shadow: 0 1px 2px rgba(15, 23, 42, .04), 0 26px 50px -20px rgba(15, 23, 42, .22); }
+  .viz { height: 150px; border-radius: 14px; background: var(--bg-soft); margin-bottom: 22px; overflow: hidden; }
+  .viz svg { width: 100%; height: 100%; }
+  .card h3 { font: 700 22px var(--display); letter-spacing: -.02em; margin: 0 0 12px; }
+  .card ul { margin: 0; padding: 0; list-style: none; display: grid; gap: 8px; color: var(--muted); font-size: 15.5px; }
+  .card li { display: flex; gap: 10px; align-items: baseline; }
+  .card li::before { content: ""; flex: none; width: 7px; height: 7px; border-radius: 50%; background: var(--c, var(--indigo)); transform: translateY(-2px); }
+  .cards4 { grid-template-columns: repeat(2, 1fr); }
+  @media (max-width: 900px) { .cards3 { grid-template-columns: 1fr; } }
+  /* the little charts only animate once their card is on screen */
+  .bar { transform-box: fill-box; transform-origin: bottom; transform: scaleY(0); transition: transform 1s var(--ease); transition-delay: calc(var(--d) * 60ms + 200ms); }
+  .in .bar { transform: none; }
+  .stroke { stroke-dasharray: var(--len); stroke-dashoffset: var(--len); transition: stroke-dashoffset 1.8s var(--ease) .5s; }
+  .in .stroke { stroke-dashoffset: 0; }
+  .dot { transform-box: fill-box; transform-origin: center; transform: scale(0); transition: transform .6s var(--ease); transition-delay: calc(var(--d) * 40ms + 200ms); }
+  .in .dot { transform: none; }
+
+  /* projects */
+  .filters { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 30px; }
+  .filters button { border: 1px solid var(--line); background: #fff; color: var(--muted); border-radius: 999px; padding: 9px 16px; font: 600 14px var(--body); cursor: pointer; transition: all .25s var(--ease); }
+  .filters button:hover { color: var(--ink); border-color: #c7d2fe; }
+  .filters button.on { background: var(--ink); color: #fff; border-color: var(--ink); }
+  .projects { display: grid; grid-template-columns: repeat(2, 1fr); gap: 22px; perspective: 1400px; }
+  .project { display: flex; flex-direction: column; padding: 28px; transform-style: preserve-3d; transition: transform .5s var(--ease), box-shadow .5s var(--ease), opacity .45s var(--ease); }
+  .project.gone { display: none; }
+  .project.fading { opacity: 0; transform: scale(.96); }
+  .p-top { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 18px; }
+  .p-ic { width: 52px; height: 52px; border-radius: 15px; display: grid; place-items: center; font-size: 26px; transform: translateZ(30px); }
+  .status { font: 600 12px var(--mono); letter-spacing: .5px; padding: 5px 10px; border-radius: 999px; background: var(--bg-soft); color: var(--muted); border: 1px solid var(--line); }
+  .status.live { background: #dcfce7; color: #166534; border-color: #bbf7d0; }
+  .status.dev { background: var(--amber-soft); color: #92400e; border-color: #fde68a; }
+  .project h3 { font-size: 25px; margin-bottom: 6px; transform: translateZ(20px); }
+  .project .kind { font: 600 12.5px var(--mono); color: var(--indigo); letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 14px; }
+  .project p.sum { color: var(--muted); margin: 0 0 16px; font-size: 16px; }
+  .project dl { margin: 0 0 18px; display: grid; gap: 10px; }
+  .project dt { font: 700 12px var(--mono); letter-spacing: 1.5px; color: var(--faint); text-transform: uppercase; }
+  .project dd { margin: 2px 0 0; font-size: 15px; color: var(--ink); }
+  .tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: auto; padding-top: 6px; }
+  .tags span { font: 500 12.5px var(--mono); padding: 5px 10px; border-radius: 8px; background: var(--indigo-soft); color: #3730a3; }
+  .p-links { display: flex; gap: 16px; margin-top: 18px; padding-top: 18px; border-top: 1px dashed var(--line); }
+  .p-links a { display: inline-flex; align-items: center; gap: 7px; font: 600 14.5px var(--body); color: var(--indigo); }
+  .p-links a svg { width: 16px; height: 16px; transition: transform .25s var(--ease); }
+  .p-links a:hover svg { transform: translate(3px, -3px); }
+  @media (max-width: 900px) { .projects { grid-template-columns: 1fr; } }
+
+  /* process timeline */
+  .timeline { position: relative; display: grid; gap: 26px; padding-left: 64px; }
+  .rail { position: absolute; left: 22px; top: 8px; bottom: 8px; width: 3px; border-radius: 3px; background: var(--line); overflow: hidden; }
+  .rail i { position: absolute; inset: 0; background: linear-gradient(var(--indigo), var(--teal), var(--amber)); transform-origin: top; transform: scaleY(var(--p, 0)); }
+  .step { position: relative; padding: 22px 26px; overflow: visible; }
+  .step::before { content: attr(data-n); position: absolute; left: -64px; top: 20px; width: 46px; height: 46px; border-radius: 50%; display: grid; place-items: center; background: #fff; border: 2px solid var(--line); font: 700 15px var(--mono); color: var(--faint); transition: all .5s var(--ease); }
+  .step.lit::before { border-color: var(--indigo); color: #fff; background: var(--indigo); box-shadow: 0 0 0 6px var(--indigo-soft); }
+  .step h3 { margin-bottom: 6px; }
+  .step p { margin: 0; color: var(--muted); }
+  .step code { font: 500 13.5px var(--mono); background: var(--bg-soft); border: 1px solid var(--line); border-radius: 6px; padding: 1px 6px; color: var(--ink); }
+
+  /* skills */
+  .skills { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
+  @media (max-width: 1000px) { .skills { grid-template-columns: repeat(2, 1fr); } }
+  .skill-group h3 { font-size: 19px; margin-bottom: 16px; }
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; }
+  .chips span { display: inline-flex; align-items: center; gap: 8px; padding: 8px 14px; border-radius: 12px; border: 1px solid var(--line); background: #fff; font: 500 15px var(--body); transition: transform .25s var(--ease), border-color .25s, box-shadow .25s; }
+  .chips span:hover { transform: translateY(-3px); border-color: #c7d2fe; box-shadow: var(--shadow); }
+  .chips b { width: 8px; height: 8px; border-radius: 50%; background: var(--c); }
+  @media (max-width: 800px) { .skills { grid-template-columns: 1fr; } }
+
+  /* research + education */
+  .duo { display: grid; grid-template-columns: repeat(2, 1fr); gap: 22px; }
+  .duo .card { padding: 30px; }
+  .duo h3 { margin-bottom: 8px; }
+  .duo p { color: var(--muted); margin: 0 0 14px; }
+  .badge-row { display: flex; flex-wrap: wrap; gap: 8px; }
+  .badge-row span { font: 600 12.5px var(--mono); padding: 6px 11px; border-radius: 999px; background: var(--teal-soft); color: #115e59; }
+  @media (max-width: 800px) { .duo { grid-template-columns: 1fr; } }
+
+  /* contact */
+  .contact { text-align: center; padding: 130px 0; overflow: hidden; }
+  .contact h2 { margin: 0 auto 18px; max-width: 16ch; }
+  .contact .sub { margin: 0 auto 36px; }
+  .contact .cta { justify-content: center; }
+  .marquee { margin-top: 80px; display: flex; overflow: hidden; mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent); -webkit-mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent); }
+  .marquee div { display: flex; gap: 40px; padding-right: 40px; flex: none; animation: slide 36s linear infinite; font: 700 26px var(--display); color: #cbd5e1; letter-spacing: -.02em; white-space: nowrap; }
+  .marquee span::after { content: "✦"; margin-left: 40px; color: var(--indigo); opacity: .5; }
+  @keyframes slide { to { transform: translateX(-100%); } }
+  footer { border-top: 1px solid var(--line); padding: 28px 0; color: var(--faint); font-size: 14px; }
+  footer .wrap { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    *, *::before, *::after { animation: none !important; transition: none !important; }
+    .reveal, .reveal-x { opacity: 1; transform: none; filter: none; }
+    .bar, .dot { transform: none; } .stroke { stroke-dashoffset: 0; }
+  }
+</style>
+</head>
+<body class="no-js">
+<div class="progress" id="progress"></div>
+
+<header class="nav" id="nav">
+  <div class="wrap">
+    <a class="brand" href="#top"><i>SP</i>Swayam Panchal</a>
+    <nav class="links" aria-label="Sections">
+      <a href="#about">About</a><a href="#work">Work</a><a href="#process">Process</a><a href="#skills">Skills</a><a href="#research">Research</a>
+    </nav>
+    <a class="nav-cta" href="#contact">Get in touch</a>
+  </div>
+</header>
+
+<main id="top">
+  <!-- HERO -->
+  <section class="hero">
+    <div class="blob a"></div><div class="blob b"></div>
+    <div class="wrap hero-grid">
+      <div>
+        <span class="pill reveal"><b></b>Data Science · ML · GenAI</span>
+        <h1 class="reveal" style="--i:1">Swayam<br /><span class="grad">Panchal</span></h1>
+        <p class="lead reveal" style="--i:2">I turn raw data into decisions: SQL and analysis, machine &amp; deep learning models, and GenAI systems people can trust.</p>
+        <p class="typer reveal" style="--i:3" aria-live="polite">&gt;&gt;&gt; focus = <span id="typed">'machine learning'</span><i></i></p>
+        <div class="cta reveal" style="--i:4">
+          <a class="btn btn-primary magnetic" href="#work">View my work
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+          <a class="btn btn-ghost magnetic" href="https://www.linkedin.com/in/swayam-panchal-11281b34a/" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="#0A66C2"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.34V9h3.42v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z"/></svg>LinkedIn</a>
+          <a class="btn btn-ghost magnetic" href="https://github.com/SDP42" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5a11.5 11.5 0 0 0-3.64 22.41c.58.1.79-.25.79-.56v-2c-3.2.7-3.88-1.37-3.88-1.37-.52-1.33-1.28-1.69-1.28-1.69-1.05-.71.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.56-.29-5.24-1.28-5.24-5.69 0-1.26.45-2.29 1.19-3.09-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.17 1.18a11 11 0 0 1 5.77 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.8 1.19 1.83 1.19 3.09 0 4.42-2.69 5.39-5.25 5.68.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 12 .5z"/></svg>GitHub</a>
+        </div>
+        <div class="meta reveal" style="--i:5">
+          <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7-6.2-7-11.5a7 7 0 0 1 14 0C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg>Mumbai, India</span>
+          <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M2 9l10-5 10 5-10 5z"/><path d="M6 11v5c3.5 2.7 8.5 2.7 12 0v-5"/></svg>B.Tech AI &amp; DS · DJSCE</span>
+          <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 20V4M4 20h16M8 16v-4M12 16V8M16 16v-6"/></svg>Python · SQL · PyTorch</span>
+        </div>
+      </div>
+      <div class="stage reveal" style="--i:2">
+        <canvas id="scatter" aria-label="Interactive 3D scatter plot: data points converge into three clusters. Drag to rotate."></canvas>
+        <div class="legend"><span><b style="background:var(--indigo)"></b>cluster 0</span><span><b style="background:var(--teal)"></b>cluster 1</span><span><b style="background:var(--amber)"></b>cluster 2</span></div>
+        <div class="stage-ui"><small id="kinfo">k-means · k=3 · iter 0</small><button id="rerun" type="button">Re-run</button></div>
+      </div>
+    </div>
+    <div class="scroll-cue"><i></i>SCROLL</div>
+  </section>
+
+  <!-- STATS -->
+  <section class="stats">
+    <div class="wrap">
+      <div class="stats-grid reveal">
+        <div class="stat"><strong><span class="count" data-to="49">0</span><em>+</em></strong><span>public repositories</span></div>
+        <div class="stat"><strong><span class="count" data-to="570">0</span><em>+</em></strong><span>contributions since July 2024</span></div>
+        <div class="stat"><strong><span class="count" data-to="8">0</span></strong><span>featured projects, 5+ commits each</span></div>
+        <div class="stat"><strong><span class="count" data-to="539">0</span></strong><span>commits across featured work</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="wrap about-grid">
+      <div>
+        <p class="eyebrow reveal">About</p>
+        <h2 class="reveal" style="--i:1">From a messy spreadsheet to a clear decision.</h2>
+        <p class="reveal" style="--i:2">I'm <strong>Swayam Devendra Panchal</strong>, an Artificial Intelligence &amp; Data Science undergraduate at <strong>Dwarkadas J. Sanghvi College of Engineering</strong>, Mumbai.</p>
+        <p class="reveal" style="--i:3">I enjoy the whole journey of a data problem: framing the question, cleaning and exploring the data, testing ideas with statistics, building models that hold up out of sample, and presenting results so that anyone in the room can act on them.</p>
+        <p class="reveal" style="--i:4">I care about <strong>honest numbers</strong>: provenance you can trace, uncertainty you can see, and dashboards that say "no data" instead of pretending.</p>
+      </div>
+      <div class="facts">
+        <div class="fact reveal-x" style="--i:1"><div class="ic" style="background:var(--indigo-soft);color:var(--indigo)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 20V4M4 20h16M8 16v-4M12 16V8M16 16v-6"/></svg></div><div><h4>Data science &amp; analytics</h4><p>EDA, statistics and hypothesis tests, forecasting, clear reporting</p></div></div>
+        <div class="fact reveal-x" style="--i:2"><div class="ic" style="background:var(--teal-soft);color:var(--teal)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="6" cy="17" r="2"/><circle cx="11" cy="9" r="2"/><circle cx="18" cy="13" r="2"/><path d="M3 21l18-18" stroke-dasharray="2 3"/></svg></div><div><h4>Machine &amp; deep learning</h4><p>Ensembles, time series, GRU/CNN models in PyTorch, SHAP explainability</p></div></div>
+        <div class="fact reveal-x" style="--i:3"><div class="ic" style="background:var(--amber-soft);color:#b45309"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5v14c0 1.7 3.6 3 8 3s8-1.3 8-3V5"/><path d="M4 12c0 1.7 3.6 3 8 3s8-1.3 8-3"/></svg></div><div><h4>DBMS &amp; SQL</h4><p>PostgreSQL, PL/pgSQL, SQLite FTS5, SQLAlchemy + Alembic migrations</p></div></div>
+        <div class="fact reveal-x" style="--i:4"><div class="ic" style="background:#ffe4e6;color:var(--rose)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M6 2h9l5 5v15H6z"/><path d="M14 2v6h6M9 13h8M9 17h6"/></svg></div><div><h4>Generative AI &amp; NLP</h4><p>LLM apps with Gemini &amp; Groq, embeddings, spaCy and KeyBERT, research for IEEE &amp; LNCS</p></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHAT I DO -->
+  <section class="soft">
+    <div class="wrap">
+      <div class="head">
+        <p class="eyebrow reveal">What I do</p>
+        <h2 class="reveal" style="--i:1">Four ways I turn data into value.</h2>
+      </div>
+      <div class="cards3 cards4">
+        <article class="card tilt reveal" style="--i:0;--c:var(--indigo)">
+          <div class="viz"><svg viewBox="0 0 340 150" id="viz-hist"></svg></div>
+          <h3>Data analysis &amp; EDA</h3>
+          <ul><li>Cleaning and wrangling messy, real-world data</li><li>Statistics and hypothesis testing</li><li>Forecasting and dashboards people act on</li></ul>
+        </article>
+        <article class="card tilt reveal" style="--i:1;--c:var(--teal)">
+          <div class="viz"><svg viewBox="0 0 340 150" id="viz-ml"></svg></div>
+          <h3>Machine &amp; deep learning</h3>
+          <ul><li>Ensembles, time-series and gradient boosting</li><li>GRU and CNN models in PyTorch, YOLO for vision</li><li>Walk-forward validation and SHAP explanations</li></ul>
+        </article>
+        <article class="card tilt reveal" style="--i:2;--c:var(--amber)">
+          <div class="viz"><svg viewBox="0 0 340 150" id="viz-sql"></svg></div>
+          <h3>DBMS &amp; SQL</h3>
+          <ul><li>Schema design and normalisation</li><li>PostgreSQL, PL/pgSQL and SQLite full-text search</li><li>SQLAlchemy models with Alembic migrations</li></ul>
+        </article>
+        <article class="card tilt reveal" style="--i:3;--c:var(--rose)">
+          <div class="viz"><svg viewBox="0 0 340 150" id="viz-gen"></svg></div>
+          <h3>Generative AI &amp; NLP</h3>
+          <ul><li>LLM apps with Gemini and Groq</li><li>Embeddings, intent models and retrieval</li><li>Knowledge graphs with spaCy and KeyBERT</li></ul>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- WORK -->
+  <section id="work">
+    <div class="wrap">
+      <div class="head">
+        <p class="eyebrow reveal">Selected work</p>
+        <h2 class="reveal" style="--i:1">Projects, explained properly.</h2>
+        <p class="sub reveal" style="--i:2">Only shipped, public work with at least five commits. Each card covers the problem, my approach, the stack and the real commit count. Filter by the kind of work you care about.</p>
+      </div>
+      <div class="filters reveal" role="tablist" aria-label="Filter projects">
+        <button class="on" data-f="all">All</button><button data-f="ml">Machine learning</button><button data-f="dl">Deep learning</button><button data-f="ds">Data science</button><button data-f="sql">DBMS &amp; SQL</button><button data-f="genai">GenAI &amp; NLP</button>
+      </div>
+      <div class="projects" id="projects"></div>
+    </div>
+  </section>
+
+  <!-- PROCESS -->
+  <section id="process" class="soft">
+    <div class="wrap">
+      <div class="head">
+        <p class="eyebrow reveal">Process</p>
+        <h2 class="reveal" style="--i:1">How I work with data.</h2>
+        <p class="sub reveal" style="--i:2">The same five steps, whether it's a quick analysis or a full ML system.</p>
+      </div>
+      <div class="timeline" id="timeline">
+        <div class="rail"><i></i></div>
+        <div class="step card" data-n="01"><h3>Frame the question</h3><p>Agree on the decision the analysis must support, the metric that defines success, and what "no answer" looks like.</p></div>
+        <div class="step card" data-n="02"><h3>Collect, validate &amp; clean</h3><p>Profile every column, quarantine bad rows instead of silently fixing them, and keep lineage so each number traces back to its source. <code>pandas</code> <code>SQL</code></p></div>
+        <div class="step card" data-n="03"><h3>Explore</h3><p>Distributions, outliers, correlations and segment cuts, with statistical tests before any claim. <code>EDA</code> <code>scipy</code></p></div>
+        <div class="step card" data-n="04"><h3>Model &amp; evaluate</h3><p>Start from a simple baseline, then validate properly (cross-validation, holdout, calibration) and explain what drives predictions. <code>scikit-learn</code> <code>SHAP</code></p></div>
+        <div class="step card" data-n="05"><h3>Communicate &amp; ship</h3><p>Dashboards, written findings, or an API. Whatever gets the insight used, with its limitations stated plainly. <code>Streamlit</code> <code>FastAPI</code></p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <section id="skills">
+    <div class="wrap">
+      <div class="head">
+        <p class="eyebrow reveal">Toolkit</p>
+        <h2 class="reveal" style="--i:1">Tools I reach for, by area.</h2>
+      </div>
+      <div class="skills">
+        <div class="skill-group card reveal" style="--i:0"><h3>Machine learning</h3><div class="chips" style="--c:var(--indigo)"><span><b></b>scikit-learn</span><span><b></b>XGBoost</span><span><b></b>Random forests / ExtraTrees</span><span><b></b>Ridge &amp; regularisation</span><span><b></b>ARIMA &amp; ETS (statsmodels)</span><span><b></b>SHAP</span><span><b></b>Walk-forward validation</span></div></div>
+        <div class="skill-group card reveal" style="--i:1"><h3>Deep learning</h3><div class="chips" style="--c:var(--rose)"><span><b></b>PyTorch</span><span><b></b>TensorFlow / Keras</span><span><b></b>GRU / RNNs</span><span><b></b>CNNs</span><span><b></b>YOLO</span><span><b></b>OpenCV</span></div></div>
+        <div class="skill-group card reveal" style="--i:2"><h3>Generative AI &amp; NLP</h3><div class="chips" style="--c:var(--amber)"><span><b></b>Gemini</span><span><b></b>Groq</span><span><b></b>Prompt design</span><span><b></b>Sentence embeddings (bge)</span><span><b></b>Hugging Face</span><span><b></b>spaCy</span><span><b></b>KeyBERT</span><span><b></b>TF-IDF</span></div></div>
+        <div class="skill-group card reveal" style="--i:0"><h3>Data science &amp; analysis</h3><div class="chips" style="--c:var(--teal)"><span><b></b>Pandas</span><span><b></b>NumPy</span><span><b></b>SciPy</span><span><b></b>Hypothesis testing</span><span><b></b>Monte Carlo</span><span><b></b>Matplotlib · Seaborn · Plotly</span><span><b></b>Jupyter</span><span><b></b>Excel</span></div></div>
+        <div class="skill-group card reveal" style="--i:1"><h3>DBMS &amp; SQL</h3><div class="chips" style="--c:#2563EB"><span><b></b>SQL</span><span><b></b>PostgreSQL (Neon)</span><span><b></b>PL/pgSQL</span><span><b></b>SQLite + FTS5</span><span><b></b>SQLAlchemy 2</span><span><b></b>Alembic migrations</span><span><b></b>Schema design</span><span><b></b>Redis</span></div></div>
+        <div class="skill-group card reveal" style="--i:2"><h3>Engineering &amp; delivery</h3><div class="chips" style="--c:#64748B"><span><b></b>Python</span><span><b></b>FastAPI</span><span><b></b>Streamlit</span><span><b></b>React · TypeScript</span><span><b></b>Docker</span><span><b></b>Git &amp; GitHub Actions</span><span><b></b>Vercel · Render</span></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- RESEARCH & EDUCATION -->
+  <section id="research" class="soft">
+    <div class="wrap">
+      <div class="head">
+        <p class="eyebrow reveal">Research &amp; education</p>
+        <h2 class="reveal" style="--i:1">Learning in public.</h2>
+      </div>
+      <div class="duo">
+        <article class="card tilt reveal" style="--i:0">
+          <p class="eyebrow" style="color:var(--teal)">Education</p>
+          <h3>B.Tech, Artificial Intelligence &amp; Data Science</h3>
+          <p>Dwarkadas J. Sanghvi College of Engineering, Mumbai. Coursework spanning statistics, machine and deep learning, database management systems, NLP and algorithms.</p>
+          <div class="badge-row"><span>Statistics</span><span>Machine learning</span><span>Deep learning</span><span>DBMS</span><span>NLP</span><span>DAA</span></div>
+        </article>
+        <article class="card tilt reveal" style="--i:1">
+          <p class="eyebrow" style="color:var(--rose)">Research</p>
+          <h3>AI that rebuilds lecture material</h3>
+          <p>Learnova V2 turns lecture PDFs into illustrated, interactive decks with labs and quizzes. I'm writing it up as research papers in IEEE and Springer LNCS formats.</p>
+          <div class="badge-row"><span>IEEE</span><span>Springer LNCS</span><span>EdTech</span></div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact" class="contact">
+    <div class="wrap">
+      <p class="eyebrow reveal" style="justify-content:center">Contact</p>
+      <h2 class="reveal" style="--i:1">Let's turn your data into <span class="grad">decisions.</span></h2>
+      <p class="sub reveal" style="--i:2">Open to data science, ML and data analyst internships, research collaborations and interesting datasets.</p>
+      <div class="cta reveal" style="--i:3">
+        <a class="btn btn-primary magnetic" href="https://www.linkedin.com/in/swayam-panchal-11281b34a/" target="_blank" rel="noopener">Connect on LinkedIn</a>
+        <a class="btn btn-ghost magnetic" href="https://github.com/SDP42" target="_blank" rel="noopener">Follow on GitHub</a>
+      </div>
+    </div>
+    <div class="marquee" aria-hidden="true">
+      <div><span>Machine learning</span><span>Deep learning</span><span>Generative AI</span><span>SQL &amp; databases</span><span>Data analysis</span><span>Forecasting</span><span>NLP</span></div>
+      <div><span>Machine learning</span><span>Deep learning</span><span>Generative AI</span><span>SQL &amp; databases</span><span>Data analysis</span><span>Forecasting</span><span>NLP</span></div>
+    </div>
+  </section>
+</main>
+
+<footer><div class="wrap"><span>© <span id="year">2026</span> Swayam Panchal · Mumbai</span><span class="mono">Built by hand · no frameworks</span></div></footer>
+
+<script>
+document.body.classList.remove('no-js');
+const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+document.getElementById('year').textContent = new Date().getFullYear();
+
+/* ── projects (data drives the cards) ─────────────────────────────────── */
+const GH = 'https://github.com/SDP42/';
+const PROJECTS = [
+  { name: 'East Coast Freight Desk', repo: 'east-coast-freight-desk', live: 'https://east-coast-freight-desk.vercel.app', commits: 34, icon: '🚢', bg: '#e0f2fe',
+    kind: 'Smart India Hackathon 2026 · ML forecasting', f: ['ml', 'dl', 'ds', 'sql', 'genai'],
+    sum: 'Freight forecasting and chartering decision support for SAIL’s coking-coal imports to India’s East Coast ports.',
+    problem: 'Each dry-bulk fixture is a costly bet on freight rates, vessel fit and port tides.',
+    approach: 'Compared naive, ARIMA, ETS, Ridge, ExtraTrees, XGBoost, blends and a PyTorch GRU on ~200 walk-forward monthly forecasts with Wilcoxon tests and Bonferroni correction. The live ARIMA + XGBoost ensemble shows 95% bands and SHAP drivers. An intent model (TF-IDF + bge-small embeddings) reaches 86.9% accuracy.',
+    tags: ['XGBoost', 'ARIMA', 'PyTorch GRU', 'SHAP', 'PostgreSQL', 'SQLAlchemy', 'FastAPI', 'React'] },
+  { name: 'WorldCupAI', repo: 'WorldCupAI-2026', commits: 8, icon: '🏆', bg: 'var(--amber-soft)',
+    kind: 'Predictive modelling · deep learning', f: ['ml', 'dl', 'ds'],
+    sum: 'An end-to-end ML platform that predicts the FIFA World Cup 2026 knockout stage.',
+    problem: 'Forecast match outcomes and a complete knockout bracket with honest uncertainty.',
+    approach: 'Data and feature engineering on team history, ML and deep-learning models combined in an ensemble, Monte Carlo simulation of the bracket, SHAP to explain each prediction, all in a Streamlit dashboard.',
+    tags: ['scikit-learn', 'Deep learning', 'Ensembles', 'Monte Carlo', 'SHAP', 'Streamlit'] },
+  { name: 'DataPilot', repo: 'datapilot', commits: 71, icon: '🧭', bg: 'var(--indigo-soft)',
+    kind: 'Autonomous data science', f: ['ds', 'ml'],
+    sum: 'Give it a messy dataset and an objective; it works through the pipeline like a data scientist and explains every step.',
+    problem: 'Most of an analyst’s time goes on profiling, quality checks and cleaning before any insight.',
+    approach: 'CSV ingestion and profiling, data-quality analysis, approval-gated cleaning plans, dataset versioning and lineage, a deterministic EDA and statistics layer, then automated problem understanding (target, task type, candidate metrics). Phases 0–7 complete.',
+    tags: ['Python', 'Pandas', 'Statistics', 'Data quality', 'Lineage', 'EDA'] },
+  { name: 'Learnova V2', repo: 'LearnovaV2', commits: 178, icon: '🎓', bg: '#ffe4e6',
+    kind: 'Generative AI · EdTech · research', f: ['genai'],
+    sum: 'Rebuilds lecture notes and PDFs into illustrated, interactive PowerPoint and web decks with labs, quizzes and a study tutor.',
+    problem: 'Lecture material is dense and static; students need visual, step-by-step explanations.',
+    approach: 'An illustration-first deck pipeline driven by Gemini and Groq, PPTX export, step-by-step problem explainers and a tutor, served by FastAPI with a React PWA and a 700+ test suite. Being written up for IEEE and Springer LNCS.',
+    tags: ['Gemini', 'Groq', 'LLMs', 'FastAPI', 'React', 'PPTX', 'Research'] },
+  { name: 'BrainMapAI', repo: 'BrainMapAI', commits: 58, icon: '🧠', bg: 'var(--indigo-soft)',
+    kind: 'NLP · knowledge graphs', f: ['genai', 'ds'],
+    sum: 'Turns unstructured PDFs and research papers into navigable, semantically validated knowledge graphs.',
+    problem: 'Vector-search RAG returns isolated chunks and misses how concepts connect.',
+    approach: 'Grammatical parsing with spaCy and keyphrase extraction with KeyBERT build entity–relation graphs, explored in an interactive React interface.',
+    tags: ['spaCy', 'KeyBERT', 'NLP', 'Knowledge graphs', 'Python', 'React'] },
+  { name: 'NAMASTE × ICD-11', repo: 'SIH_PS_10', commits: 40, icon: '🩺', bg: 'var(--teal-soft)',
+    kind: 'Smart India Hackathon · health data', f: ['sql', 'ds'],
+    sum: 'A FHIR R4 terminology microservice linking India’s NAMASTE codes with WHO ICD-11 Traditional Medicine (TM2).',
+    problem: 'Traditional-medicine diagnoses can’t interoperate with modern EMRs without a shared vocabulary.',
+    approach: '468 curated concept mappings (296 NAMASTE ↔ 437 ICD-11 codes) in SQLite with FTS5 indexes for sub-100 ms search, FHIR ConceptMap output from a 9-endpoint FastAPI service, and a React dashboard.',
+    tags: ['SQLite', 'FTS5', 'FHIR R4', 'FastAPI', 'React', 'TypeScript'] },
+  { name: 'Elevate 1.0', repo: 'Elevate1.0', live: 'https://elevate1-0.vercel.app', commits: 145, icon: '✈️', bg: 'var(--amber-soft)',
+    kind: 'Full-stack · PostgreSQL', f: ['sql'],
+    sum: 'The website and participant/staff portal for a 24-hour campus hackathon.',
+    problem: 'Run registrations, judging and a live leaderboard securely for hundreds of people.',
+    approach: 'Serverless Node API on Neon PostgreSQL with PL/pgSQL, role-based dashboards, JWT sessions in HttpOnly cookies and bcrypt passwords, with scores hidden until an admin approves them.',
+    tags: ['PostgreSQL', 'PL/pgSQL', 'Neon', 'Node.js', 'React', 'JWT'] },
+  { name: 'Smart Resort 360', repo: 'guestexperience', live: 'https://guestexperience.vercel.app', commits: 5, icon: '🏨', bg: '#dcfce7',
+    kind: 'AI concierge · 3D digital twin', f: ['genai'],
+    sum: 'A guest portal with a live 3D digital twin of a 130-suite resort and a multilingual AI concierge.',
+    problem: 'Guests want instant, personal service in their own language.',
+    approach: 'A three.js twin of every floor and suite, an AI concierge that understands English, Hindi and Marathi (including romanised speech), and rules that turn booking notes into tasks and predictive-maintenance dispatches.',
+    tags: ['TypeScript', 'three.js', 'NLP', 'Multilingual', 'Automation'] },
+];
+const arrow = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M7 17L17 7M8 7h9v9"/></svg>';
+document.getElementById('projects').innerHTML = PROJECTS.map((p, i) => `
+  <article class="card project tilt reveal" style="--i:${i % 2}" data-f="${p.f.join(' ')}">
+    <div class="p-top"><div class="p-ic" style="background:${p.bg}">${p.icon}</div><span class="status ${p.live ? 'live' : ''}">${p.live ? '● Live · ' : ''}${p.commits} commits</span></div>
+    <h3>${p.name}</h3><div class="kind">${p.kind}</div>
+    <p class="sum">${p.sum}</p>
+    <dl><div><dt>Problem</dt><dd>${p.problem}</dd></div><div><dt>Approach</dt><dd>${p.approach}</dd></div></dl>
+    <div class="tags">${p.tags.map(t => `<span>${t}</span>`).join('')}</div>
+    <div class="p-links"><a href="${GH + p.repo}" target="_blank" rel="noopener">View code ${arrow}</a>${p.live ? `<a href="${p.live}" target="_blank" rel="noopener">Live demo ${arrow}</a>` : ''}</div>
+  </article>`).join('');
+
+/* filter with a quick fade */
+document.querySelectorAll('.filters button').forEach(b => b.addEventListener('click', () => {
+  document.querySelectorAll('.filters button').forEach(x => x.classList.toggle('on', x === b));
+  const f = b.dataset.f, cards = [...document.querySelectorAll('.project')];
+  cards.forEach(c => c.classList.add('fading'));
+  setTimeout(() => {
+    cards.forEach(c => {
+      const show = f === 'all' || c.dataset.f.split(' ').includes(f);
+      c.classList.toggle('gone', !show);
+      if (show) { c.classList.add('in'); requestAnimationFrame(() => requestAnimationFrame(() => c.classList.remove('fading'))); }
+    });
+  }, 260);
+}));
+
+/* ── mini charts for "What I do" ──────────────────────────────────────── */
+(() => {
+  const H = [12, 22, 38, 60, 84, 100, 94, 74, 52, 32, 18, 9];
+  let s = H.map((h, i) => `<rect class="bar" style="--d:${i}" x="${18 + i * 26}" y="${132 - h}" width="19" height="${h}" rx="4" fill="#4F46E5" fill-opacity="${.3 + i * .05}"/>`).join('');
+  s += `<polyline class="stroke" style="--len:420" points="${H.map((h, i) => `${27.5 + i * 26},${126 - h}`).join(' ')}" fill="none" stroke="#E11D48" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round"/>`;
+  document.getElementById('viz-hist').innerHTML = s;
+
+  let seed = 11; const rnd = () => (seed = (seed * 16807) % 2147483647) / 2147483647;
+  let m = '<line x1="170" y1="10" x2="170" y2="140" stroke="#E2E8F0"/>';
+  for (let i = 0; i < 26; i++) { const x = 20 + rnd() * 130, y = 18 + rnd() * 112; if (y < .62 * x + 40) m += `<circle class="dot" style="--d:${i}" cx="${x}" cy="${y}" r="5" fill="#0D9488"/>`; }
+  for (let i = 0; i < 26; i++) { const x = 190 + rnd() * 130, y = 18 + rnd() * 112; if (y > .62 * (x - 170) + 10) m += `<circle class="dot" style="--d:${i}" cx="${x}" cy="${y}" r="5" fill="#F59E0B"/>`; }
+  m += '<path class="stroke" style="--len:260" d="M110 142 C 150 100, 200 60, 250 8" fill="none" stroke="#0F172A" stroke-width="2.6" stroke-linecap="round"/>';
+  m += '<text x="262" y="138" font-family="JetBrains Mono, monospace" font-size="11" font-weight="700" fill="#475569">acc 0.94</text>';
+  document.getElementById('viz-ml').innerHTML = m;
+
+  const mono = 'font-family="JetBrains Mono, monospace"';
+  const rows = [['North', 92], ['West', 74], ['South', 58], ['East', 41]];
+  document.getElementById('viz-sql').innerHTML = `
+    <rect x="12" y="12" width="168" height="126" rx="10" fill="#0F172A"/>
+    <text ${mono} font-size="10.5" font-weight="600" fill="#93C5FD"><tspan x="24" y="34">SELECT</tspan><tspan x="24" y="52" fill="#E2E8F0">region, SUM(amt)</tspan><tspan x="24" y="70">FROM</tspan><tspan x="66" y="70" fill="#E2E8F0">orders</tspan><tspan x="24" y="88">GROUP BY</tspan><tspan x="90" y="88" fill="#E2E8F0">region</tspan><tspan x="24" y="106">ORDER BY</tspan><tspan x="90" y="106" fill="#E2E8F0">2 DESC;</tspan></text>
+    <rect class="dot" style="--d:2" x="24" y="117" width="7" height="12" fill="#5EEAD4"/>
+    ${rows.map(([r, v], i) => `<text ${mono} x="194" y="${34 + i * 28}" font-size="10.5" font-weight="600" fill="#475569">${r}</text>
+      <rect class="bar" style="--d:${i + 4};transform-origin:left;transform-box:fill-box" x="240" y="${24 + i * 28}" width="${v}" height="14" rx="4" fill="#F59E0B" fill-opacity="${1 - i * .18}"/>`).join('')}`;
+
+  document.getElementById('viz-gen').innerHTML = `
+    <rect class="dot" style="--d:1" x="14" y="16" width="170" height="34" rx="12" fill="#fff" stroke="#E2E8F0"/>
+    <text ${mono} x="26" y="38" font-size="11" font-weight="600" fill="#0F172A">"forecast next month?"</text>
+    ${[0, 1, 2, 3, 4, 5, 6, 7].map(i => `<rect class="bar" style="--d:${i + 3}" x="${18 + i * 20}" y="${70 + (i % 3) * 5}" width="14" height="${30 - (i % 3) * 5}" rx="3" fill="#E11D48" fill-opacity="${.25 + (i % 4) * .18}"/>`).join('')}
+    <text ${mono} x="18" y="122" font-size="9.5" font-weight="700" fill="#94A3B8">EMBEDDING · 384-d</text>
+    <path class="stroke" style="--len:120" d="M182 86 C 200 86, 205 60, 222 60" fill="none" stroke="#CBD5E1" stroke-width="2" stroke-dasharray="4 4"/>
+    <rect class="dot" style="--d:10" x="196" y="64" width="132" height="66" rx="12" fill="#4F46E5"/>
+    <text ${mono} font-size="10.5" font-weight="600" fill="#fff"><tspan x="208" y="86">intent: forecast</tspan><tspan x="208" y="104">conf 0.91 ✓</tspan><tspan x="208" y="120" fill="#C7D2FE">→ /forecast API</tspan></text>`;
+})();
+
+/* ── reveal on scroll, counters ───────────────────────────────────────── */
+const io = new IntersectionObserver(entries => entries.forEach(e => {
+  if (!e.isIntersecting) return;
+  e.target.classList.add('in');
+  e.target.querySelectorAll('.count').forEach(countUp);
+  io.unobserve(e.target);
+}), { threshold: .14, rootMargin: '0px 0px -6% 0px' });
+document.querySelectorAll('.reveal, .reveal-x').forEach(el => io.observe(el));
+
+function countUp(el) {
+  const to = +el.dataset.to, t0 = performance.now(), dur = reduced ? 0 : 1600;
+  const tick = now => {
+    const p = dur ? Math.min(1, (now - t0) / dur) : 1;
+    el.textContent = Math.round(to * (1 - Math.pow(1 - p, 4)));
+    if (p < 1) requestAnimationFrame(tick);
+  };
+  requestAnimationFrame(tick);
+}
+
+/* ── scroll: progress bar, nav, active link, timeline ─────────────────── */
+const nav = document.getElementById('nav'), bar = document.getElementById('progress');
+const links = [...document.querySelectorAll('.links a')];
+const sections = links.map(a => document.querySelector(a.getAttribute('href')));
+const tl = document.getElementById('timeline'), rail = tl.querySelector('.rail i'), steps = [...tl.querySelectorAll('.step')];
+let lastY = 0, scrollT = 0;
+function onScroll() {
+  const y = scrollY, max = document.documentElement.scrollHeight - innerHeight;
+  bar.style.transform = `scaleX(${max > 0 ? y / max : 0})`;
+  nav.classList.toggle('scrolled', y > 10);
+  nav.classList.toggle('hidden', y > lastY && y > 400);
+  lastY = y;
+  let cur = -1;
+  sections.forEach((s, i) => { if (s && s.getBoundingClientRect().top < innerHeight * .4) cur = i; });
+  links.forEach((a, i) => a.classList.toggle('active', i === cur));
+  const r = tl.getBoundingClientRect(), mid = innerHeight * .55;
+  const p = Math.max(0, Math.min(1, (mid - r.top) / r.height));
+  rail.style.setProperty('--p', p);
+  steps.forEach(s => s.classList.toggle('lit', s.getBoundingClientRect().top + 30 < mid));
+  scrollT = Math.min(1, y / innerHeight);
+}
+addEventListener('scroll', onScroll, { passive: true });
+onScroll();
+
+/* ── typed focus line ─────────────────────────────────────────────────── */
+(() => {
+  const words = ["'machine learning'", "'deep learning'", "'SQL & databases'", "'generative AI'", "'data analysis'"];
+  const el = document.getElementById('typed');
+  if (reduced) return;
+  let w = 0, n = words[0].length, del = true;
+  setTimeout(function step() {
+    const word = words[w];
+    n += del ? -1 : 1;
+    el.textContent = word.slice(0, n);
+    if (del && n === 0) { del = false; w = (w + 1) % words.length; }
+    else if (!del && n === words[w].length) { del = true; return setTimeout(step, 1800); }
+    setTimeout(step, del ? 28 : 55);
+  }, 2200);
+})();
+
+/* ── card tilt + spotlight, magnetic buttons ──────────────────────────── */
+if (!reduced && matchMedia('(hover: hover)').matches) {
+  document.addEventListener('pointermove', e => {
+    const card = e.target.closest('.tilt');
+    if (!card) return;
+    const r = card.getBoundingClientRect(), x = (e.clientX - r.left) / r.width, y = (e.clientY - r.top) / r.height;
+    card.style.setProperty('--mx', `${x * 100}%`); card.style.setProperty('--my', `${y * 100}%`);
+    card.style.transform = `perspective(1000px) rotateX(${(.5 - y) * 6}deg) rotateY(${(x - .5) * 8}deg) translateY(-4px)`;
+  });
+  document.addEventListener('pointerout', e => {
+    const card = e.target.closest('.tilt');
+    if (card && !card.contains(e.relatedTarget)) card.style.transform = '';
+  });
+  document.querySelectorAll('.magnetic').forEach(b => {
+    b.addEventListener('pointermove', e => {
+      const r = b.getBoundingClientRect();
+      b.style.transform = `translate(${(e.clientX - r.left - r.width / 2) * .18}px, ${(e.clientY - r.top - r.height / 2) * .3}px)`;
+    });
+    b.addEventListener('pointerleave', () => { b.style.transform = ''; });
+  });
+}
+
+/* ── hero: interactive 3D scatter with k-means ────────────────────────── */
+(() => {
+  const cv = document.getElementById('scatter'), ctx = cv.getContext('2d'), info = document.getElementById('kinfo');
+  const COLORS = ['#4F46E5', '#0D9488', '#F59E0B'];
+  const CENTERS = [[-.5, -.35, -.35], [.5, .1, .4], [.15, .55, -.45]];
+  let seed = 7; const rnd = () => (seed = (seed * 16807) % 2147483647) / 2147483647;
+  const gauss = () => { let u = 0, v = 0; while (!u) u = rnd(); while (!v) v = rnd(); return Math.sqrt(-2 * Math.log(u)) * Math.cos(2 * Math.PI * v); };
+  const clamp = v => Math.max(-.95, Math.min(.95, v));
+  const pts = [];
+  CENTERS.forEach((c, k) => { for (let i = 0; i < 60; i++) pts.push({ t: c.map(v => clamp(v + gauss() * .17)), true: k, p: [0, 0, 0], label: -1 }); });
+
+  let cents, iter, phase, phaseT;
+  function start() {
+    pts.forEach(p => { p.p = [rnd() * 1.8 - .9, rnd() * 1.8 - .9, rnd() * 1.8 - .9]; p.from = p.p.slice(); p.label = -1; });
+    cents = [0, 1, 2].map(() => ({ p: [rnd() * 1.4 - .7, rnd() * 1.4 - .7, rnd() * 1.4 - .7] }));
+    iter = 0; phase = 'gather'; phaseT = performance.now();
+  }
+  // one k-means step on the target positions (Lloyd's algorithm)
+  function kstep() {
+    pts.forEach(p => {
+      let best = 0, bd = Infinity;
+      cents.forEach((c, k) => { const d = (p.t[0] - c.p[0]) ** 2 + (p.t[1] - c.p[1]) ** 2 + (p.t[2] - c.p[2]) ** 2; if (d < bd) { bd = d; best = k; } });
+      p.label = best;
+    });
+    let moved = 0;
+    cents.forEach((c, k) => {
+      const mine = pts.filter(p => p.label === k);
+      if (!mine.length) return;
+      const m = [0, 1, 2].map(a => mine.reduce((s, p) => s + p.t[a], 0) / mine.length);
+      moved += Math.hypot(m[0] - c.p[0], m[1] - c.p[1], m[2] - c.p[2]);
+      c.from = c.p.slice(); c.to = m;
+    });
+    iter++;
+    info.textContent = `k-means · k=3 · iter ${iter}${moved < .01 ? ' · converged' : ''}`;
+    return moved;
+  }
+  document.getElementById('rerun').addEventListener('click', start);
+  start();
+
+  let yaw = -.6, pitch = .38, vy = 0, drag = null, W = 0, Hh = 0, dpr = 1;
+  function size() {
+    dpr = Math.min(1.5, devicePixelRatio || 1);
+    const r = cv.getBoundingClientRect(); W = r.width; Hh = r.height;
+    cv.width = W * dpr; cv.height = Hh * dpr; ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+  size(); addEventListener('resize', size);
+  cv.addEventListener('pointerdown', e => { drag = { x: e.clientX, y: e.clientY }; cv.setPointerCapture(e.pointerId); });
+  cv.addEventListener('pointermove', e => {
+    if (!drag) return;
+    vy = (e.clientX - drag.x) * .006; yaw += vy;
+    pitch = Math.max(.05, Math.min(1.1, pitch + (e.clientY - drag.y) * .004));
+    drag = { x: e.clientX, y: e.clientY };
+  });
+  addEventListener('pointerup', () => { drag = null; });
+
+  const ease = t => 1 - Math.pow(1 - Math.min(1, Math.max(0, t)), 3);
+  const lerp = (a, b, t) => a.map((v, i) => v + (b[i] - v) * t);
+  function project(v, yawA, pitchA, s, cx, cy) {
+    const [x, y, z] = v;
+    const x1 = x * Math.cos(yawA) - z * Math.sin(yawA), z1 = x * Math.sin(yawA) + z * Math.cos(yawA);
+    const y2 = y * Math.cos(pitchA) - z1 * Math.sin(pitchA), z2 = y * Math.sin(pitchA) + z1 * Math.cos(pitchA);
+    const f = 6 / (6 + z2);
+    return [cx + x1 * s * f, cy - y2 * s * f, z2, f];
+  }
+
+  // draw only while the hero is on screen and the tab is visible
+  let onScreen = true;
+  new IntersectionObserver(([e]) => {
+    const was = onScreen; onScreen = e.isIntersecting;
+    if (onScreen && !was) requestAnimationFrame(frame);
+  }).observe(cv);
+  document.addEventListener('visibilitychange', () => { if (!document.hidden && onScreen) requestAnimationFrame(frame); });
+
+  function frame(now) {
+    if (!onScreen || document.hidden) return;
+    if (!drag) { yaw += reduced ? 0 : .0035 + vy; vy *= .94; }
+    const pa = pitch + scrollT * .35, s = Math.min(W, Hh) * .29 * (1 + scrollT * .1), cx = W / 2, cy = Hh * .46;
+    const P = v => project(v, yaw, pa, s, cx, cy);
+    const t = (now - phaseT) / 1000;
+    if (phase === 'gather') {
+      const k = ease(t / 1.6);
+      pts.forEach(p => { p.p = lerp(p.from, p.t, k); });
+      if (t > 1.8) { phase = 'iterate'; phaseT = now; kstep(); }
+    } else if (phase === 'iterate') {
+      const k = ease(t / .9);
+      cents.forEach(c => { if (c.to) c.p = lerp(c.from, c.to, k); });
+      if (t > 1.1) { cents.forEach(c => { if (c.to) c.p = c.to; }); phaseT = now; if (kstep() < .01 || iter > 8) phase = 'done'; }
+    }
+
+    ctx.clearRect(0, 0, W, Hh);
+    // floor grid at y = -1
+    ctx.lineWidth = 1;
+    for (let i = 0; i <= 6; i++) {
+      const g = -1 + i / 3;
+      [[[g, -1, -1], [g, -1, 1]], [[-1, -1, g], [1, -1, g]]].forEach(([a, b]) => {
+        const A = P(a), B = P(b);
+        ctx.strokeStyle = i % 3 === 0 ? '#C7D2FE' : '#E0E7FF';
+        ctx.beginPath(); ctx.moveTo(A[0], A[1]); ctx.lineTo(B[0], B[1]); ctx.stroke();
+      });
+    }
+    // axes from the back corner
+    const O = [-1, -1, -1];
+    [[[1, -1, -1], 'x'], [[-1, 1, -1], 'y'], [[-1, -1, 1], 'z']].forEach(([e, l]) => {
+      const A = P(O), B = P(e);
+      ctx.strokeStyle = '#64748B'; ctx.lineWidth = 1.6;
+      ctx.beginPath(); ctx.moveTo(A[0], A[1]); ctx.lineTo(B[0], B[1]); ctx.stroke();
+      const L = P(e.map((v, i) => v + (v - O[i]) * .08));
+      ctx.fillStyle = '#64748B'; ctx.font = '600 13px JetBrains Mono, monospace'; ctx.textAlign = 'center'; ctx.fillText(l, L[0], L[1] + 4);
+    });
+
+    // floor shadows, then points back-to-front
+    const drawn = pts.map(p => ({ p, q: P(p.p), sh: P([p.p[0], -1, p.p[2]]) }));
+    ctx.fillStyle = 'rgba(15,23,42,.06)';
+    drawn.forEach(d => { ctx.beginPath(); ctx.ellipse(d.sh[0], d.sh[1], 4 * d.sh[3], 1.8 * d.sh[3], 0, 0, Math.PI * 2); ctx.fill(); });
+    const cs = cents.map((c, k) => ({ c: true, k, q: P(c.p) }));
+    [...drawn, ...(phase === 'gather' ? [] : cs)].sort((a, b) => a.q[2] - b.q[2]).forEach(d => {
+      const [x, y, z, f] = d.q, depth = (z + 1.8) / 3.6;
+      if (d.c) {
+        const r = 11 * f;
+        ctx.fillStyle = COLORS[d.k]; ctx.strokeStyle = '#fff'; ctx.lineWidth = 3;
+        ctx.beginPath(); ctx.arc(x, y, r, 0, Math.PI * 2); ctx.fill(); ctx.stroke();
+        ctx.strokeStyle = '#fff'; ctx.lineWidth = 2.2;
+        ctx.beginPath(); ctx.moveTo(x - r * .45, y - r * .45); ctx.lineTo(x + r * .45, y + r * .45); ctx.moveTo(x + r * .45, y - r * .45); ctx.lineTo(x - r * .45, y + r * .45); ctx.stroke();
+        return;
+      }
+      const lab = d.p.label;
+      ctx.globalAlpha = .55 + .45 * (1 - depth);
+      ctx.fillStyle = lab < 0 ? '#94A3B8' : COLORS[lab];
+      ctx.beginPath(); ctx.arc(x, y, 5.2 * f, 0, Math.PI * 2); ctx.fill();
+      ctx.globalAlpha = 1;
+    });
+    requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
+})();
+</script>
+</body>
+</html>
